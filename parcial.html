@@ -1,0 +1,275 @@
+<div class="no-overflow" id="yui_3_18_1_1_1793031524721_98"><section style="font-family: Arial, Helvetica, sans-serif; line-height: 1.65; color: #243247; max-width: 1050px; margin: auto;" id="yui_3_18_1_1_1793031524721_97"><header style="background: #17365d; color: #ffffff; padding: 24px; border-radius: 12px; margin-bottom: 22px;">
+<h2 style="margin: 0px; color: rgb(255, 255, 255); font-size: 34px;" data-asw-orgfontsize="34">SEGUNDO PARCIAL PRÁCTICO</h2>
+<p style="margin: 8px 0 0; font-size: 17px;" data-asw-orgfontsize="17">Electiva Profesional I — Desarrollo de Aplicaciones Móviles</p>
+<h3 style="color: rgb(255, 255, 255); margin-bottom: 0px; font-size: 24px;" data-asw-orgfontsize="24">Sistema de Gestión de Inventario — API REST + Flutter</h3>
+</header>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">1. Objetivo</h3>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Desarrollar una solución informática para la gestión de inventario de productos de un establecimiento comercial, compuesta por una <strong>API REST propia con persistencia en base de datos</strong> y una <strong>aplicación móvil desarrollada en Flutter</strong> que consuma dicha API mediante el paquete <code>Dio</code>.</p>
+<p data-asw-orgfontsize="16" style="font-size: 16px;" id="yui_3_18_1_1_1793031524721_102">El ejercicio busca integrar los conocimientos trabajados durante el semestre relacionados con desarrollo móvil, peticiones HTTP, operaciones CRUD, programación asíncrona, navegación, organización de proyectos y consumo de servicios web.</p>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">2. Descripción general</h3>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">La solución deberá estar compuesta por dos proyectos funcionales:</p>
+<ol data-asw-orgfontsize="16" style="font-size: 16px;">
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Backend:</strong> API REST desarrollada con la tecnología de su preferencia (Laravel, Node.js, Python, entre otras), conectada a una base de datos que almacene permanentemente los productos.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Frontend móvil:</strong> aplicación desarrollada en Flutter que permita consultar, registrar, editar y eliminar productos mediante peticiones HTTP realizadas a la API.</li>
+</ol>
+<p data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Importante:</strong> No se permitirá simular las operaciones CRUD mediante datos estáticos, listas locales o información que se pierda al reiniciar el sistema. Los datos deberán almacenarse y recuperarse desde una base de datos a través de la API desarrollada.</p>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">3. Backend — Desarrollo de la API REST</h3>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Deberan construir una API REST para administrar productos. La tecnología utilizada para su implementación será de libre elección.</p>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">3.1. Entidad Producto</h4>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">La base de datos deberá contener, como mínimo, los siguientes campos:</p>
+<div style="overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #d5dce5;">
+<thead style="background: #eaf0f7;">
+<tr>
+<th style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: left; font-size: 12px;" data-asw-orgfontsize="12">Campo</th>
+<th style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: left; font-size: 12px;" data-asw-orgfontsize="12">Tipo</th>
+<th style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: left; font-size: 12px;" data-asw-orgfontsize="12">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>id</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Entero</td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Identificador único y autogenerado.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>nombre</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Texto</td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Nombre del producto.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>codigo</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Texto</td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Código único del producto.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>descripcion</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Texto</td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Descripción adicional (opcional).</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>precio</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Decimal</td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Precio unitario del producto.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>cantidad</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Entero</td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Unidades disponibles.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>categoria</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Texto</td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Categoría del producto.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">3.2. Endpoints obligatorios</h4>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">La API deberá implementar, como mínimo, los siguientes cinco endpoints:</p>
+<div style="overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #d5dce5;">
+<thead style="background: #eaf0f7;">
+<tr>
+<th style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Método</th>
+<th style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Endpoint</th>
+<th style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Funcionalidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>GET</strong></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>/api/productos</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Listar todos los productos.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>GET</strong></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>/api/productos/{id}</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Consultar el detalle de un producto.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>POST</strong></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>/api/productos</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Registrar un nuevo producto.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>PUT</strong></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>/api/productos/{id}</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Actualizar un producto existente.</td>
+</tr>
+<tr>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>DELETE</strong></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><code>/api/productos/{id}</code></td>
+<td style="padding: 9px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Eliminar un producto.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">3.3. Requisitos del backend</h4>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Implementar una base de datos con persistencia real.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Retornar las respuestas de la API en formato JSON.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Implementar correctamente los métodos HTTP solicitados.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Validar campos obligatorios, código único, precios y cantidades válidas.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Utilizar códigos de respuesta HTTP apropiados (200, 201, 404, 422, entre otros).</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Registrar al menos <strong>10 productos de prueba</strong> para demostrar el funcionamiento.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Permitir que Flutter realice las operaciones directamente sobre los datos almacenados.</li>
+</ul>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">4. Frontend — Aplicación móvil Flutter</h3>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Desarrollar una aplicación móvil con una interfaz organizada, navegación funcional y consumo de la API mediante <strong>Dio</strong>.</p>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">4.1. Dashboard principal</h4>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">La pantalla de inicio deberá incluir:</p>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Nombre e identificación visual de la aplicación.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Menú de navegación para acceder a las funcionalidades.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Tarjeta con el total de productos registrados.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Tarjeta con el total de unidades disponibles en inventario.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Tarjeta con el valor económico total del inventario, calculado mediante la suma de <code>precio × cantidad</code> de cada producto.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Acceso a la gestión de productos.</li>
+</ul>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Los indicadores deberán calcularse con información real proveniente de la API y actualizarse cuando se modifiquen los productos.</p>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">4.2. Gestión de productos — CRUD completo</h4>
+<ol data-asw-orgfontsize="16" style="font-size: 16px;">
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Listar:</strong> obtener los productos desde la API y mostrar nombre, precio y cantidad disponible.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Consultar:</strong> visualizar el detalle completo de un producto seleccionado.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Registrar:</strong> implementar un formulario que permita almacenar nuevos productos mediante una petición POST.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Editar:</strong> permitir seleccionar un producto, precargar sus datos y actualizarlo mediante PUT.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Eliminar:</strong> permitir eliminar un producto mediante DELETE, solicitando confirmación al usuario.</li>
+</ol>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Después de registrar, actualizar o eliminar un producto, la interfaz deberá reflejar correctamente los cambios realizados.</p>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">4.3. Navegación e interfaz</h4>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Implementar navegación funcional mediante <code>go_router</code>.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Incluir un menú lateral o inferior para desplazarse entre las funcionalidades principales.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Utilizar componentes visuales de Flutter y mantener una presentación coherente.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Implementar formularios organizados con validación básica de entradas.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Mostrar mensajes claros cuando una operación se complete o falle.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Contemplar los estados de carga, error y ausencia de registros.</li>
+</ul>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">5. Requisitos técnicos y buenas prácticas</h3>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">El proyecto Flutter deberá conservar <strong>la estructura, organización de archivos y separación de responsabilidades trabajadas durante las clases</strong>.</p>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Utilizar obligatoriamente <code>Dio</code> para las peticiones HTTP.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Utilizar <code>go_router</code> para la navegación.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Utilizar <code>flutter_dotenv</code> para configurar la URL base de la API.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Aplicar los conceptos de <code>Future</code>, <code>async</code> y <code>await</code> según corresponda.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Separar la presentación visual, los modelos y la lógica de comunicación con la API.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">No realizar peticiones HTTP directamente dentro de los widgets de presentación.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Implementar manejo de excepciones y errores de comunicación con Dio.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Escribir código organizado, legible y con nombres descriptivos.</li>
+</ul>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">6. Despliegue de la API — Opcional (5%)</h3>
+<div style="background: #eef5ff; border-left: 5px solid #3769b0; padding: 14px 18px; border-radius: 6px;">
+<p style="margin-top: 0px; font-size: 16px;" data-asw-orgfontsize="16"><strong>El despliegue del backend en un servidor es opcional.</strong> Pueden desarrollar y ejecutar tanto el backend como Flutter de manera local sin inconveniente.</p>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Quienes deseen obtener el <strong>5% correspondiente al despliegue</strong> deberán publicar su API en un servidor o plataforma en la nube, como Railway, Render u otro proveedor de su elección.</p>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Para obtener este porcentaje se deberá demostrar:</p>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">API accesible públicamente mediante una URL HTTPS.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Base de datos funcional y persistente en el entorno desplegado.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Aplicación Flutter conectada a la API publicada.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Operaciones CRUD funcionando contra el servidor remoto.</li>
+</ul>
+<p style="margin-bottom: 0px; font-size: 16px;" data-asw-orgfontsize="16"><strong>Nota:</strong> El desarrollo local es completamente válido y permite obtener hasta el 95% de la calificación. El 5% restante se obtiene únicamente cumpliendo los requisitos del despliegue.</p>
+</div>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">7. Repositorio y documentación</h3>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Deberan publicar su trabajo en un repositorio de GitHub, incluyendo el código fuente del backend y de Flutter, claramente identificados.</p>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Repositorio público que permita revisar ambos proyectos.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Uso de Git y commits descriptivos que evidencien el avance.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Archivo <code>README.md</code> con descripción general de la solución.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Tecnologías utilizadas en el backend y frontend.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Instrucciones para instalar y ejecutar ambos proyectos.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Descripción de la base de datos y de los endpoints implementados.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Ejemplos de peticiones y respuestas JSON de la API.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">URL pública de la API, si se realizó el despliegue.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">No incluir contraseñas, credenciales ni secretos en el repositorio.</li>
+</ul>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">8. Entregables</h3>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">8.1. Repositorio GitHub</h4>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Entregar el enlace del repositorio público que contenga el backend, la aplicación Flutter y la documentación correspondiente.</p>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">8.2. Video explicativo — Obligatorio</h4>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">Grabar un video donde se <strong>explique cómo desarrolló la solución y demuestre su funcionamiento</strong>. No será suficiente mostrar únicamente la aplicación terminada.</p>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">El video deberá evidenciar:</p>
+<ol data-asw-orgfontsize="16" style="font-size: 16px;">
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Backend:</strong> explicar la tecnología seleccionada, la base de datos, los endpoints desarrollados y cómo se implementaron las operaciones CRUD.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Pruebas de la API:</strong> demostrar las peticiones HTTP utilizando Postman, Thunder Client, Swagger u otra herramienta equivalente.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Flutter:</strong> explicar la organización del proyecto, la navegación, el uso de Dio y la forma en que la aplicación se comunica con el backend.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Demostración funcional:</strong> mostrar el Dashboard, listado, consulta, registro, edición y eliminación de productos.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Persistencia:</strong> demostrar que los registros creados o modificados se conservan en la base de datos.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;"><strong>Despliegue, si aplica:</strong> explicar brevemente cómo publicó la API, mostrar la URL pública y demostrar el funcionamiento de Flutter conectado al servidor remoto.</li>
+</ol>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">El video deberá tener audio explicativo y permitir observar el código y el funcionamiento real de los proyectos. Puede compartirse mediante un enlace accesible de Google Drive, YouTube (no listado) u otra plataforma.</p>
+<h4 style="color: rgb(23, 54, 93); font-size: 20px;" data-asw-orgfontsize="20">8.3. PDF de evidencias</h4>
+<p data-asw-orgfontsize="16" style="font-size: 16px;">El documento PDF deberá contener:</p>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Identificación del estudiante.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Enlace al repositorio de GitHub.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Enlace al video explicativo.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Breve descripción de las tecnologías utilizadas.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Capturas del Dashboard y de las operaciones CRUD en Flutter.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Evidencia de los endpoints y de la base de datos.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">URL de la API y evidencias del despliegue, si corresponde.</li>
+</ul>
+<div style="background: #fff7e6; border-left: 5px solid #e0a12b; padding: 14px 18px; border-radius: 6px; margin: 18px 0;"><strong>Entrega en Moodle:</strong> subir el archivo PDF de evidencias. Los enlaces del repositorio y del video deberán estar incluidos en el documento y contar con permisos de acceso para su revisión.</div>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">9. Criterios de evaluación (100%)</h3>
+<div style="overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #d5dce5;">
+<thead style="background: #17365d; color: #ffffff;">
+<tr>
+<th style="padding: 12px; border: 1px solid rgb(213, 220, 229); text-align: left; font-size: 12px;" data-asw-orgfontsize="12">Criterio</th>
+<th style="padding: 12px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12">Peso</th>
+<th style="padding: 12px; border: 1px solid rgb(213, 220, 229); text-align: left; font-size: 12px;" data-asw-orgfontsize="12">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>API REST y base de datos</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12"><strong>25%</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Endpoints funcionales, persistencia, validaciones y respuestas HTTP correctas.</td>
+</tr>
+<tr style="background: #f7f9fc;">
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>CRUD Flutter + Dio</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12"><strong>30%</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Listado, consulta, registro, edición y eliminación consumiendo la API real mediante Dio.</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>Dashboard, interfaz y navegación</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12"><strong>15%</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Dashboard con indicadores reales, menú funcional, pantallas organizadas y navegación correcta.</td>
+</tr>
+<tr style="background: #f7f9fc;">
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>Arquitectura y buenas prácticas</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12"><strong>15%</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Estructura trabajada en clase, separación de responsabilidades, organización y calidad del código.</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>Validaciones, manejo de errores y entregables</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12"><strong>10%</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">Validación de formularios, manejo de errores HTTP, README, repositorio, PDF y video explicativo completo.</td>
+</tr>
+<tr style="background: #eef5ff;">
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>Despliegue funcional (opcional)</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12"><strong>5%</strong></td>
+<td style="padding: 10px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12">API y base de datos desplegadas, accesibles públicamente y consumidas desde Flutter.</td>
+</tr>
+<tr style="background: #eaf0f7;">
+<td style="padding: 12px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>TOTAL</strong></td>
+<td style="padding: 12px; border: 1px solid rgb(213, 220, 229); text-align: center; font-size: 12px;" data-asw-orgfontsize="12"><strong>100%</strong></td>
+<td style="padding: 12px; border: 1px solid rgb(213, 220, 229); font-size: 12px;" data-asw-orgfontsize="12"><strong>95% requisitos base + 5% despliegue opcional.</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 style="color: rgb(23, 54, 93); font-size: 24px;" data-asw-orgfontsize="24">10. Consideraciones finales</h3>
+<ul>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Se evaluará el funcionamiento real de la solución y la capacidad del estudiante para explicar su implementación.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">El backend puede ejecutarse localmente o estar desplegado en un servidor.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">El consumo de la API desde Flutter deberá realizarse mediante Dio.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">La información debe persistir en una base de datos y mantenerse disponible después de reiniciar la aplicación.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">La organización del proyecto deberá corresponder a lo desarrollado durante las clases.</li>
+<li data-asw-orgfontsize="16" style="font-size: 16px;">Los enlaces entregados deberán estar disponibles para su revisión.</li>
+</ul>
+<footer style="background: #f0f4f9; border-top: 3px solid #17365d; padding: 16px 20px; margin-top: 24px; border-radius: 0 0 10px 10px;">
+<p style="margin: 0px; font-size: 16px;" data-asw-orgfontsize="16"><strong>Electiva Profesional I — Ingeniería de Sistemas</strong></p>
+<p style="margin: 5px 0px 0px; font-size: 16px;" data-asw-orgfontsize="16">Segundo Parcial Práctico — Desarrollo Backend + Flutter</p>
+</footer></section></div>
