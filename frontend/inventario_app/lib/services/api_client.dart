@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiClient {
@@ -10,10 +9,7 @@ class ApiClient {
     } catch (_) {
       // dotenv no inicializado (p. ej. tests)
     }
-    String baseUrl = raw;
-    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
-      baseUrl = baseUrl.replaceFirst('localhost', '10.0.2.2');
-    }
+    final baseUrl = raw;
     dio = Dio(BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 10),

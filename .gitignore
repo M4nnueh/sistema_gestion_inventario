@@ -14,3 +14,7 @@ frontend/inventario_app/pubspec.lock
 # OS
 .DS_Store
 Thumbs.db
+
+# Ignorar archivos locales y PDFs
+*.pdf
+.idea/

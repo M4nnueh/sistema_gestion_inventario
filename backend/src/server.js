@@ -15,6 +15,16 @@ const productosRouter = require('./routes/productos');
 app.use('/api/productos', productosRouter);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`);
+  console.log(`Local: http://localhost:${PORT}`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`El puerto ${PORT} ya esta en uso. Cierra el proceso anterior o cambia PORT en .env.`);
+  } else {
+    console.error('Error del servidor:', err);
+  }
+  process.exit(1);
 });
