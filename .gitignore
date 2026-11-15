@@ -17,4 +17,5 @@ Thumbs.db
 
 # Ignorar archivos locales y PDFs
 *.pdf
+!INFORME_TALLER_JWT.pdf
 .idea/
