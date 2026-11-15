@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'app.dart';
+import 'providers/auth_provider.dart';
 import 'providers/producto_provider.dart';
 
 Future<void> main() async {
@@ -11,10 +12,17 @@ Future<void> main() async {
   } catch (_) {
     // Permite ejecutar sin asset en entornos de prueba.
   }
+
+  final authProvider = AuthProvider();
+  await authProvider.tryRestoreSession();
+
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ProductoProvider()..loadProductos(),
-      child: const InventarioApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: authProvider),
+        ChangeNotifierProvider(create: (_) => ProductoProvider()),
+      ],
+      child: InventarioApp(authProvider: authProvider),
     ),
   );
 }

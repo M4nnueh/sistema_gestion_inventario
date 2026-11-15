@@ -4,8 +4,24 @@ import 'package:provider/provider.dart';
 import '../providers/producto_provider.dart';
 import '../widgets/app_drawer.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Cargar productos al iniciar sesion y entrar al dashboard
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<ProductoProvider>().loadProductos();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
