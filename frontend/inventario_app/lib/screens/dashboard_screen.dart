@@ -15,8 +15,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    // Cargar productos al iniciar sesión y entrar al dashboard
-    Future.microtask(() => context.read<ProductoProvider>().loadProductos());
+    // Cargar productos al iniciar sesion y entrar al dashboard
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<ProductoProvider>().loadProductos();
+      }
+    });
   }
 
   @override
