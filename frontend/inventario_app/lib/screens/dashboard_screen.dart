@@ -4,8 +4,20 @@ import 'package:provider/provider.dart';
 import '../providers/producto_provider.dart';
 import '../widgets/app_drawer.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Cargar productos al iniciar sesión y entrar al dashboard
+    Future.microtask(() => context.read<ProductoProvider>().loadProductos());
+  }
 
   @override
   Widget build(BuildContext context) {
