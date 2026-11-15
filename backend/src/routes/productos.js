@@ -1,15 +1,17 @@
 const express = require('express');
 const db = require('../db');
 const { validateProducto } = require('../validators');
+const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+// Todas las rutas CRUD de productos están protegidas con JWT
+router.get('/', authenticateToken, (req, res) => {
   const rows = db.prepare('SELECT * FROM productos ORDER BY id ASC').all();
   res.json(rows);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticateToken, (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id)) return res.status(400).json({ message: 'id invalido' });
   const row = db.prepare('SELECT * FROM productos WHERE id = ?').get(id);
@@ -17,7 +19,7 @@ router.get('/:id', (req, res) => {
   res.json(row);
 });
 
-router.post('/', (req, res) => {
+router.post('/', authenticateToken, (req, res) => {
   const { valid, errors } = validateProducto(req.body);
   if (!valid) return res.status(422).json({ message: 'Validacion fallida', errors });
 
@@ -37,7 +39,7 @@ router.post('/', (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', authenticateToken, (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id)) return res.status(400).json({ message: 'id invalido' });
   const existing = db.prepare('SELECT * FROM productos WHERE id = ?').get(id);
@@ -67,7 +69,7 @@ router.put('/:id', (req, res) => {
   }
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticateToken, (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id)) return res.status(400).json({ message: 'id invalido' });
   const info = db.prepare('DELETE FROM productos WHERE id = ?').run(id);

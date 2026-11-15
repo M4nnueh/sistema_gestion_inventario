@@ -12,7 +12,9 @@ app.get('/', (req, res) => {
 });
 
 const productosRouter = require('./routes/productos');
+const authRouter = require('./routes/auth');
 app.use('/api/productos', productosRouter);
+app.use('/api/auth', authRouter);
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, '0.0.0.0', () => {

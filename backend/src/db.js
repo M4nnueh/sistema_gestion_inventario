@@ -1,6 +1,7 @@
 const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 const fs = require('fs');
+const bcrypt = require('bcryptjs');
 
 const dbPath = process.env.DB_PATH || './data/inventario.db';
 const resolved = path.resolve(__dirname, '..', dbPath);
@@ -9,6 +10,8 @@ if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
 const db = new DatabaseSync(resolved);
 try { db.exec('PRAGMA journal_mode = WAL'); } catch (e) { /* ignore */ }
+
+// Tabla productos
 db.exec(`
 CREATE TABLE IF NOT EXISTS productos (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,6 +26,18 @@ CREATE TABLE IF NOT EXISTS productos (
 );
 `);
 
+// Tabla usuarios
+db.exec(`
+CREATE TABLE IF NOT EXISTS usuarios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nombre TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+`);
+
+// Seed de productos
 const seedProducts = [
   { nombre: 'Laptop HP 15', codigo: 'LAP-001', descripcion: 'Laptop 15 pulgadas 8GB RAM', precio: 2500000, cantidad: 10, categoria: 'Computadores' },
   { nombre: 'Mouse Logitech', codigo: 'MOU-002', descripcion: 'Mouse inalambrico', precio: 80000, cantidad: 50, categoria: 'Perifericos' },
@@ -51,6 +66,16 @@ if (count === 0) {
     db.exec('ROLLBACK');
     throw e;
   }
+}
+
+// Seed usuario administrador por defecto
+const userCount = db.prepare('SELECT COUNT(*) as c FROM usuarios').get().c;
+if (userCount === 0) {
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync('admin123', salt);
+  db.prepare(`INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)`)
+    .run('Administrador', 'admin@inventario.com', hashedPassword);
+  console.log('Seed: usuario admin creado (admin@inventario.com / admin123)');
 }
 
 module.exports = db;
